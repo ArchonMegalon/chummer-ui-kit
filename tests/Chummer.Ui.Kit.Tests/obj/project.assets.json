@@ -1,0 +1,96 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "Chummer.Ui.Kit/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/Chummer.Ui.Kit.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Chummer.Ui.Kit.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Chummer.Ui.Kit/1.0.0": {
+      "type": "project",
+      "path": "../../src/Chummer.Ui.Kit/Chummer.Ui.Kit.csproj",
+      "msbuildProject": "../../src/Chummer.Ui.Kit/Chummer.Ui.Kit.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "Chummer.Ui.Kit >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/tmp/chummer-ui-kit-dotnet/.nuget/packages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/docker/chummercomplete/chummer-ui-kit/tests/Chummer.Ui.Kit.Tests/Chummer.Ui.Kit.Tests.csproj",
+      "projectName": "Chummer.Ui.Kit.Tests",
+      "projectPath": "/docker/chummercomplete/chummer-ui-kit/tests/Chummer.Ui.Kit.Tests/Chummer.Ui.Kit.Tests.csproj",
+      "packagesPath": "/tmp/chummer-ui-kit-dotnet/.nuget/packages",
+      "outputPath": "/docker/chummercomplete/chummer-ui-kit/tests/Chummer.Ui.Kit.Tests/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/tmp/chummer-ui-kit-dotnet/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/Chummer.Ui.Kit.csproj": {
+              "projectPath": "/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/Chummer.Ui.Kit.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "allWarningsAsErrors": true,
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "10.0.100"
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

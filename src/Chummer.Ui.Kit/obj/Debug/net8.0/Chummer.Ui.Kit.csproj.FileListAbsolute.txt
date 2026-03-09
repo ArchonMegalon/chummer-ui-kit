@@ -1,0 +1,11 @@
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/Chummer.Ui.Kit.GeneratedMSBuildEditorConfig.editorconfig
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/Chummer.Ui.Kit.AssemblyInfoInputs.cache
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/Chummer.Ui.Kit.AssemblyInfo.cs
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/Chummer.Ui.Kit.csproj.CoreCompileInputs.cache
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/bin/Debug/net8.0/Chummer.Ui.Kit.deps.json
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/bin/Debug/net8.0/Chummer.Ui.Kit.dll
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/bin/Debug/net8.0/Chummer.Ui.Kit.pdb
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/Chummer.Ui.Kit.dll
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/refint/Chummer.Ui.Kit.dll
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/Chummer.Ui.Kit.pdb
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/ref/Chummer.Ui.Kit.dll

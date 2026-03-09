@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Chummer.Ui.Kit.Tests/1.0.0": {
+        "dependencies": {
+          "Chummer.Ui.Kit": "1.0.0"
+        },
+        "runtime": {
+          "Chummer.Ui.Kit.Tests.dll": {}
+        }
+      },
+      "Chummer.Ui.Kit/1.0.0": {
+        "runtime": {
+          "Chummer.Ui.Kit.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Chummer.Ui.Kit.Tests/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Chummer.Ui.Kit/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
