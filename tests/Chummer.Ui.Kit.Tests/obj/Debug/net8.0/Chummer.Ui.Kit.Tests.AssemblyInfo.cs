@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Chummer.Ui.Kit.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8654378f2fa47199305dd88c5a8946fc29073cec")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b193227a58c15abbf933497df330d3b36c6b516")]
 [assembly: System.Reflection.AssemblyProductAttribute("Chummer.Ui.Kit.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Chummer.Ui.Kit.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
