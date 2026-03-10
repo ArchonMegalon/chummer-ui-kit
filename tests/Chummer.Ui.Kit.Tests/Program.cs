@@ -12,7 +12,8 @@ var checks = new Action[]
     CompilerRejectsUnknownOverrideKeys,
     PreviewGalleryDefaultManifestStaysWithinUiKitBoundary,
     BlazorAndAvaloniaAdaptersEmitExpectedClasses,
-    AdapterPayloadContainsAccessibilityAttributes
+    AdapterPayloadContainsAccessibilityAttributes,
+    AdapterPayloadContainsUiPrimitiveAttributes
 };
 
 foreach (var check in checks)
@@ -115,6 +116,56 @@ static void AdapterPayloadContainsAccessibilityAttributes()
     ExpectEqual("true", avalonia.Attributes["is-busy"], "avalonia busy attribute");
     ExpectEqual("assertive", avalonia.Attributes["live"], "avalonia live attribute");
     ExpectEqual("Loading panel", avalonia.Attributes["label"], "avalonia label attribute");
+    ExpectEqual("status", avalonia.Attributes["role"], "avalonia state role");
+    ExpectEqual("status", blazor.Attributes["role"], "blazor state role");
+}
+
+static void AdapterPayloadContainsUiPrimitiveAttributes()
+{
+    var banner = new Banner("Read-only", "Data synced is paused.", BannerTone.Warning, pinned: true);
+    var stale = new StaleStateBadge(StaleState.Failed, "Expired cache");
+    var approval = new ApprovalChip(false, "Manager decision", "Alex");
+    var offline = new OfflineBanner("Runtime Relay", isOffline: true);
+    var shell = new ShellChrome("Session", "Read only shell", ShellChromeTone.Warning, compact: true);
+
+    var blazorBanner = BlazorUiKitAdapter.AdaptBanner(banner);
+    var avaloniaBanner = AvaloniaUiKitAdapter.AdaptBanner(banner);
+    var blazorBadge = BlazorUiKitAdapter.AdaptStaleStateBadge(stale);
+    var avaloniaBadge = AvaloniaUiKitAdapter.AdaptStaleStateBadge(stale);
+    var blazorChip = BlazorUiKitAdapter.AdaptApprovalChip(approval);
+    var avaloniaChip = AvaloniaUiKitAdapter.AdaptApprovalChip(approval);
+    var blazorOffline = BlazorUiKitAdapter.AdaptOfflineBanner(offline);
+    var avaloniaOffline = AvaloniaUiKitAdapter.AdaptOfflineBanner(offline);
+    var blazorChrome = BlazorUiKitAdapter.AdaptShellChrome(shell);
+    var avaloniaChrome = AvaloniaUiKitAdapter.AdaptShellChrome(shell);
+
+    ExpectEqual("warning", blazorBanner.Attributes["data-tone"], "blazor banner tone attribute");
+    ExpectEqual("true", blazorBanner.Attributes["data-pinned"], "blazor banner pinned attribute");
+    ExpectEqual("Data synced is paused.", blazorBanner.Attributes["data-body"], "blazor banner body attribute");
+
+    ExpectEqual("Warning", avaloniaBanner.Attributes["tone"], "avalonia banner tone attribute");
+    ExpectEqual("true", avaloniaBanner.Attributes["pinned"], "avalonia banner pinned attribute");
+    ExpectEqual("Data synced is paused.", avaloniaBanner.Attributes["body"], "avalonia banner body attribute");
+
+    ExpectEqual("failed", blazorBadge.Attributes["data-state"], "blazor stale badge state attribute");
+    ExpectEqual("Expired cache", blazorBadge.Attributes["data-detail"], "blazor stale badge detail attribute");
+    ExpectEqual("Failed", avaloniaBadge.Attributes["state"], "avalonia stale badge state attribute");
+
+    ExpectEqual("false", blazorChip.Attributes["data-approved"], "blazor approval state attribute");
+    ExpectEqual("Alex", blazorChip.Attributes["data-approver"], "blazor approval approver attribute");
+    ExpectEqual("false", avaloniaChip.Attributes["approved"], "avalonia approval state attribute");
+    ExpectEqual("Manager decision", avaloniaChip.Attributes["label"], "avalonia approval label attribute");
+    ExpectEqual("Alex", avaloniaChip.Attributes["approver"], "avalonia approval approver attribute");
+
+    ExpectEqual("Runtime Relay", blazorOffline.Attributes["data-service"], "blazor offline service attribute");
+    ExpectEqual("true", blazorOffline.Attributes["data-offline"], "blazor offline state attribute");
+    ExpectEqual("Runtime Relay", avaloniaOffline.Attributes["service"], "avalonia offline service attribute");
+    ExpectEqual("true", avaloniaOffline.Attributes["offline"], "avalonia offline state attribute");
+
+    ExpectEqual("warning", blazorChrome.Attributes["data-tone"], "blazor shell tone attribute");
+    ExpectEqual("true", blazorChrome.Attributes["data-compact"], "blazor shell compact attribute");
+    ExpectEqual("Session", avaloniaChrome.Attributes["title"], "avalonia shell title attribute");
+    ExpectEqual("true", avaloniaChrome.Attributes["compact"], "avalonia shell compact attribute");
 }
 
 static void ExpectEqual(string expected, string actual, string scenario)
