@@ -9,3 +9,4 @@
 /docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/refint/Chummer.Ui.Kit.dll
 /docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/Chummer.Ui.Kit.pdb
 /docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/ref/Chummer.Ui.Kit.dll
+/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/obj/Debug/net8.0/Chummer.Ui.Kit.sourcelink.json

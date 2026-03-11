@@ -11,6 +11,10 @@ public static class BlazorUiKitAdapter
         {
             ["role"] = "banner",
             ["aria-label"] = $"{chrome.Title} shell chrome",
+            ["data-title"] = chrome.Title,
+            ["data-body"] = chrome.Body,
+            ["data-tone"] = chrome.Tone.ToString().ToLowerInvariant(),
+            ["data-compact"] = chrome.Compact.ToString().ToLowerInvariant(),
             ["class"] = $"chummer-shell chummer-shell-{chrome.Tone.ToString().ToLowerInvariant()}{(chrome.Compact ? " chummer-shell-compact" : string.Empty)}"
         };
 
@@ -18,20 +22,30 @@ public static class BlazorUiKitAdapter
     }
 
     public static UiAdapterPayload AdaptBanner(Banner banner)
-        => UiAdapterPayload.Banner(banner.Tone.ToString().ToLowerInvariant(), banner.Headline,
+    {
+        var tone = banner.Tone.ToString().ToLowerInvariant();
+
+        return UiAdapterPayload.Banner(tone, banner.Headline,
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["class"] = $"chummer-banner{(banner.Pinned ? " chummer-banner-pinned" : string.Empty)}",
+                ["data-body"] = banner.Body,
+                ["data-tone"] = tone,
+                ["data-pinned"] = banner.Pinned.ToString().ToLowerInvariant(),
                 ["aria-label"] = banner.Headline
             });
+    }
 
     public static UiAdapterPayload AdaptStaleStateBadge(StaleStateBadge badge)
     {
+        var state = badge.State.ToString().ToLowerInvariant();
+
         var attrs = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["role"] = "note",
-            ["data-state"] = badge.State.ToString().ToLowerInvariant(),
-            ["class"] = $"chummer-badge chummer-badge-{badge.State.ToString().ToLowerInvariant()}",
+            ["data-state"] = state,
+            ["data-detail"] = badge.Detail ?? string.Empty,
+            ["class"] = $"chummer-badge chummer-badge-{state}",
             ["aria-label"] = badge.Detail ?? $"{badge.State} state"
         };
 
@@ -44,6 +58,7 @@ public static class BlazorUiKitAdapter
         {
             ["role"] = "status",
             ["data-approved"] = chip.IsApproved.ToString().ToLowerInvariant(),
+            ["data-approver"] = chip.Approver ?? string.Empty,
             ["class"] = $"chummer-chip chummer-chip-{(chip.IsApproved ? "approved" : "pending")}",
             ["aria-label"] = chip.Label
         };
@@ -57,6 +72,8 @@ public static class BlazorUiKitAdapter
         {
             ["role"] = "alert",
             ["aria-live"] = "polite",
+            ["data-service"] = banner.Service,
+            ["data-offline"] = banner.IsOffline.ToString().ToLowerInvariant(),
             ["class"] = banner.IsOffline ? "chummer-offline chummer-offline-on" : "chummer-offline chummer-offline-off",
             ["aria-label"] = banner.IsOffline ? $"{banner.Service} is offline" : $"{banner.Service} is online"
         };
@@ -68,6 +85,7 @@ public static class BlazorUiKitAdapter
     {
         var attrs = new Dictionary<string, string>(StringComparer.Ordinal)
         {
+            ["role"] = "status",
             ["aria-busy"] = state.Busy.ToString().ToLowerInvariant(),
             ["aria-disabled"] = state.Disabled.ToString().ToLowerInvariant(),
             ["aria-live"] = state.LiveRegion,

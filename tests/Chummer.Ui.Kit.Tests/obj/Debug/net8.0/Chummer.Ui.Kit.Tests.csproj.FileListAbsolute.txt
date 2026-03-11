@@ -16,3 +16,4 @@
 /docker/chummercomplete/chummer-ui-kit/tests/Chummer.Ui.Kit.Tests/obj/Debug/net8.0/Chummer.Ui.Kit.Tests.pdb
 /docker/chummercomplete/chummer-ui-kit/tests/Chummer.Ui.Kit.Tests/obj/Debug/net8.0/Chummer.Ui.Kit.Tests.genruntimeconfig.cache
 /docker/chummercomplete/chummer-ui-kit/tests/Chummer.Ui.Kit.Tests/obj/Debug/net8.0/ref/Chummer.Ui.Kit.Tests.dll
+/docker/chummercomplete/chummer-ui-kit/tests/Chummer.Ui.Kit.Tests/obj/Debug/net8.0/Chummer.Ui.Kit.Tests.sourcelink.json
