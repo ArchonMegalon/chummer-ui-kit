@@ -62,27 +62,40 @@ milestones:
     title: Dense-data controls
     maps_to_program:
       - B1
-    status: open
-    percent_complete: 15
-    eta: 2026-04-04
+    status: in_progress
+    percent_complete: 25
+    eta: 2026-04-02
     evidence:
       - "Scope is defined in implementation guidance."
-      - "Auditor flagged this area as uncovered scope."
+      - "Queue slice now maps dense-data extraction into explicit runnable backlog."
+      - "Auditor findings 487871/487874 are mapped to executable U4/U5 queue items in WORKLIST.md."
     remaining_queue_work:
-      - "Publish runnable backlog for dense data control extraction into ui-kit."
+      - "Add dense-data primitives in `src/Chummer.Ui.Kit/Adapters/UiKitAdapterPrimitives.cs` for sortable headers, dense row metadata, and explain-affinity row state without domain DTO dependencies."
+      - "Implement adapter payload methods in Blazor and Avalonia adapters for each new dense-data primitive with deterministic attribute keys."
+      - "Register dense-data previews in `src/Chummer.Ui.Kit/Preview/PreviewGalleryManifest.cs`."
+      - "Add contract-style tests in `tests/Chummer.Ui.Kit.Tests/Program.cs` asserting deterministic adapter output for all dense-data primitives."
+      - "Publish downstream adoption checklist for `chummer-presentation` and `chummer-play` to replace local/source-copied dense table primitives with `Chummer.Ui.Kit` package usage."
+      - "Acceptance criteria: no provider SDK/client logic introduced; primitives remain package-only and adapter-only."
 
   - id: U5
     title: Chummer-specific patterns
     maps_to_program:
       - B1
-    status: open
-    percent_complete: 15
-    eta: 2026-04-11
+    status: in_progress
+    percent_complete: 30
+    eta: 2026-04-09
     evidence:
       - "Pattern intent is documented (state badges/explain chips/artifact cards)."
-      - "Auditor flagged centralization still incomplete."
+      - "State badge/chip primitives and adapter payloads are present in the kit."
+      - "Queue slice now maps explain-chip and Chummer-specific pattern centralization into runnable backlog."
+      - "Auditor findings 487871/487874 are mapped to executable U4/U5 queue items in WORKLIST.md."
     remaining_queue_work:
-      - "Publish runnable backlog and acceptance tests for reusable pattern migration."
+      - "Add explicit `ExplainChip`, `SpiderStatusCard`, and `ArtifactStatusCard` primitives in `src/Chummer.Ui.Kit/Adapters/UiKitAdapterPrimitives.cs` with UI-only fields."
+      - "Implement Blazor/Avalonia adapter payload methods for these patterns with stable role/class/attribute mappings."
+      - "Expand preview manifest coverage in `src/Chummer.Ui.Kit/Preview/PreviewGalleryManifest.cs` for explain and Chummer-specific pattern previews."
+      - "Add deterministic tests in `tests/Chummer.Ui.Kit.Tests/Program.cs` that validate explain chip, stale badge, approval chip, and card payload contracts."
+      - "Publish migration checklist for app repos to delete local pattern copies once package primitives land."
+      - "Acceptance criteria: reusable patterns are app-agnostic, contain no domain/service logic, and preserve accessibility attributes."
 
   - id: U6
     title: Accessibility and localization
