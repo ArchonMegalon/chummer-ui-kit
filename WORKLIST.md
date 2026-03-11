@@ -2,6 +2,7 @@
 
 - [done] Bootstrap repo structure and package boundaries
 - [done] Seed token canon, theme compilation, and preview/gallery ownership
+- [done] Establish full `U0-U9` milestone coverage truth with explicit status, completion percent, and ETA in `.codex-design/repo/UI_KIT_MILESTONE_COVERAGE.yaml`.
 
 ## Queue Slice: B1 package-only shared boundary (tokens + shell chrome + accessibility)
 
@@ -19,3 +20,10 @@
 - [ ] `play`: Replace any local/source-copied shell chrome or accessibility classes with `Chummer.Ui.Kit` package usage.
 - [ ] `presentation` + `play`: Add boundary checks (`rg`/CI guard) that fail when repo-local copies of B1 primitives are reintroduced.
 - [ ] `presentation` + `play`: Capture package adoption evidence (commit + path list) and link it back to this repo queue slice for closure.
+
+## Milestone modeling follow-through (from coverage file)
+
+- [ ] U4 dense-data controls: publish runnable extraction backlog and acceptance criteria.
+- [ ] U5 Chummer-specific patterns: publish runnable migration backlog for state badges/explain chips/artifact patterns.
+- [ ] U7 visual regression/catalog: publish queue items for catalog surface + regression harness.
+- [ ] U8 release discipline: publish queue items for package release gates and verification checklist.

@@ -42,7 +42,26 @@
 * U8 release discipline
 * U9 finished design system
 
+Milestone coverage truth for this repo is tracked in:
+`./.codex-design/repo/UI_KIT_MILESTONE_COVERAGE.yaml`
+
+Worker expectation:
+
+* Every queue slice must map to one or more `U*` milestones.
+* Every `U*` milestone must carry explicit `status`, `percent_complete`, and `eta`.
+* If completion/ETA truth changes, update the coverage file in the same change.
+
 ## Worker rule
 
 If a component should be shared by workbench and play, it belongs here.
 If it requires domain DTOs or service calls to exist, it probably does not.
+
+
+## External integration note
+
+`chummer-ui-kit` may style or present upstream provider-assisted state, but it must not own:
+
+* vendor SDK integrations
+* external API clients
+* provider routing logic
+* provider receipt schemas

@@ -1,0 +1,136 @@
+repo: chummer-ui-kit
+last_reviewed: 2026-03-11
+truth_model: explicit_u_spine
+notes:
+  - "ETA dates are planning targets, not guarantees."
+  - "Completion is tracked per milestone as percent_complete with evidence."
+
+milestones:
+  - id: U0
+    title: Governance
+    maps_to_program:
+      - A0
+      - B1
+    status: complete
+    percent_complete: 100
+    eta: 2026-03-10
+    evidence:
+      - "Local design mirror is present under .codex-design/."
+      - "Repo-level scope/review guidance is in place."
+    remaining_queue_work: []
+
+  - id: U1
+    title: Token canon
+    maps_to_program:
+      - B1
+    status: in_progress
+    percent_complete: 70
+    eta: 2026-03-18
+    evidence:
+      - "Token canon seed exists and is consumable."
+      - "Token usage still requires package-adoption closure in downstream repos."
+    remaining_queue_work:
+      - "Complete package-consumption checklist and adoption evidence for presentation/play."
+
+  - id: U2
+    title: Primitives
+    maps_to_program:
+      - B1
+    status: in_progress
+    percent_complete: 65
+    eta: 2026-03-20
+    evidence:
+      - "Core primitives and adapter baseline exist."
+      - "Determinism and package-only boundary checks need completion for full closure."
+    remaining_queue_work:
+      - "Extend contract-style tests for deterministic adapter outputs."
+
+  - id: U3
+    title: Shell chrome
+    maps_to_program:
+      - B1
+    status: in_progress
+    percent_complete: 60
+    eta: 2026-03-21
+    evidence:
+      - "Shell primitives are present in the kit."
+      - "Presentation/play package-only consumption proof remains open."
+    remaining_queue_work:
+      - "Finalize shell chrome adapter contract and cross-repo adoption evidence."
+
+  - id: U4
+    title: Dense-data controls
+    maps_to_program:
+      - B1
+    status: open
+    percent_complete: 15
+    eta: 2026-04-04
+    evidence:
+      - "Scope is defined in implementation guidance."
+      - "Auditor flagged this area as uncovered scope."
+    remaining_queue_work:
+      - "Publish runnable backlog for dense data control extraction into ui-kit."
+
+  - id: U5
+    title: Chummer-specific patterns
+    maps_to_program:
+      - B1
+    status: open
+    percent_complete: 15
+    eta: 2026-04-11
+    evidence:
+      - "Pattern intent is documented (state badges/explain chips/artifact cards)."
+      - "Auditor flagged centralization still incomplete."
+    remaining_queue_work:
+      - "Publish runnable backlog and acceptance tests for reusable pattern migration."
+
+  - id: U6
+    title: Accessibility and localization
+    maps_to_program:
+      - B1
+      - F0
+    status: in_progress
+    percent_complete: 55
+    eta: 2026-03-25
+    evidence:
+      - "Accessibility primitives exist in adapters."
+      - "Completion requires full payload guarantees and localization-safe token coverage."
+    remaining_queue_work:
+      - "Finalize accessibility primitive payload contracts for Blazor and Avalonia."
+
+  - id: U7
+    title: Visual regression and catalog
+    maps_to_program:
+      - F0
+    status: open
+    percent_complete: 10
+    eta: 2026-04-18
+    evidence:
+      - "Requirement is recognized in feedback and queue overlay."
+    remaining_queue_work:
+      - "Materialize visual-regression harness and component catalog publication workflow."
+
+  - id: U8
+    title: Release discipline
+    maps_to_program:
+      - F0
+      - F3
+    status: open
+    percent_complete: 10
+    eta: 2026-04-25
+    evidence:
+      - "Need explicit release checklist and packaging discipline for ui-kit."
+    remaining_queue_work:
+      - "Add release gates (versioning, changelog, package validation, adoption checks)."
+
+  - id: U9
+    title: Finished design system
+    maps_to_program:
+      - F3
+    status: open
+    percent_complete: 5
+    eta: 2026-05-09
+    evidence:
+      - "Depends on closure of U1-U8."
+    remaining_queue_work:
+      - "Close all open ui-kit spine milestones and remove uncovered-scope findings."
