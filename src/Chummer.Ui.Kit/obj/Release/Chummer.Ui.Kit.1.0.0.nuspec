@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Chummer.Ui.Kit</id>
+    <version>1.0.0</version>
+    <authors>Chummer.Ui.Kit</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="fe676515fe6f575bfdcb3c0a344aab38826b7fc4" />
+    <dependencies>
+      <group targetFramework="net8.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/docker/chummercomplete/chummer-ui-kit/src/Chummer.Ui.Kit/bin/Release/net8.0/Chummer.Ui.Kit.dll" target="lib/net8.0/Chummer.Ui.Kit.dll" />
+  </files>
+</package>

@@ -61,9 +61,9 @@ Runnable backlog:
 - [ ] `ui-kit`: Add catalog coverage inventory in `src/Chummer.Ui.Kit/Preview/PreviewGalleryManifest.cs` for all package primitives/patterns used as shared boundary surface.
 - [ ] `ui-kit`: Add deterministic visual regression fixture inputs in `tests/Chummer.Ui.Kit.Tests/Program.cs` for Blazor and Avalonia payload projections.
 - [ ] `ui-kit`: Add regression assertions that fail on payload key/shape drift for catalog-covered components.
-- [ ] `ui-kit`: Extend `scripts/ai/verify.sh` invocation path only if needed so catalog + regression checks run in the standard verification command.
-- [ ] `ui-kit`: Add a release-discipline section in `README.md` with SemVer bump rules, changelog requirement, `dotnet pack` validation, and required verify command.
-- [ ] `ui-kit`: Add release evidence template in docs/worklist notes for package version, contract impact, and downstream adoption proof.
+- [x] `ui-kit`: Extend `scripts/ai/verify.sh` invocation path only if needed so catalog + regression checks run in the standard verification command.
+- [x] `ui-kit`: Add a release-discipline section in `README.md` with SemVer bump rules, changelog requirement, `dotnet pack` validation, and required verify command.
+- [x] `ui-kit`: Add release evidence template in docs/worklist notes for package version, contract impact, and downstream adoption proof.
 - [ ] `presentation` + `play`: Consume published package version and record deletion of source-copied UI primitives that the release replaces.
 - [ ] `presentation` + `play`: Add/keep guard checks preventing reintroduction of repo-local copies for catalog-covered primitives.
 
