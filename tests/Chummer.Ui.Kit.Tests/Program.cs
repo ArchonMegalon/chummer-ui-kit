@@ -10,10 +10,8 @@ var checks = new Action[]
     DefaultCanonContainsExpectedTokens,
     CompilerProducesCssVariablesFromCanonAndOverrides,
     CompilerRejectsUnknownOverrideKeys,
-    PreviewGalleryDefaultManifestStaysWithinUiKitBoundary,
-    BlazorAndAvaloniaAdaptersEmitExpectedClasses,
-    AdapterPayloadContainsAccessibilityAttributes,
-    AdapterPayloadContainsUiPrimitiveAttributes
+    PreviewGalleryDefaultManifestCoversPackageCatalog,
+    BlazorAndAvaloniaPayloadsStayDeterministic
 };
 
 foreach (var check in checks)
@@ -74,103 +72,233 @@ static void CompilerRejectsUnknownOverrideKeys()
     }
 }
 
-static void PreviewGalleryDefaultManifestStaysWithinUiKitBoundary()
+static void PreviewGalleryDefaultManifestCoversPackageCatalog()
 {
     var manifest = PreviewGalleryManifest.CreateDefault();
+    var expectedCatalogKeys = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "token_canon",
+        "theme_compilation",
+        "shell_chrome",
+        "banner",
+        "stale_state_badge",
+        "approval_chip",
+        "offline_banner",
+        "accessibility_state"
+    };
 
     ExpectEqual("Chummer.Ui.Kit", manifest.Ownership.Owner, "manifest owner");
     ExpectEqual("preview/gallery", manifest.Ownership.Route, "manifest route");
     ExpectContains(manifest.Ownership.Notes, "domain DTOs or HTTP clients", "ownership boundary");
-    ExpectTrue(manifest.Previews.ContainsKey("components"), "components preview registration");
-    ExpectTrue(manifest.Previews.ContainsKey("shell_chrome"), "shell chrome preview registration");
-    ExpectTrue(manifest.Previews.ContainsKey("banners"), "banners preview registration");
-    ExpectTrue(manifest.Previews.ContainsKey("chips"), "chips preview registration");
-    ExpectTrue(manifest.Previews.ContainsKey("accessibility"), "accessibility preview registration");
+
+    ExpectEqualInt(expectedCatalogKeys.Count, manifest.Previews.Count, "catalog key count");
+    foreach (var key in expectedCatalogKeys)
+    {
+        ExpectTrue(manifest.Previews.ContainsKey(key), $"catalog preview registration for {key}");
+    }
 }
 
-static void BlazorAndAvaloniaAdaptersEmitExpectedClasses()
+static void BlazorAndAvaloniaPayloadsStayDeterministic()
 {
-    var chrome = new ShellChrome("Main", "Workspace", ShellChromeTone.Focused, compact: true);
-    var blazorChrome = BlazorUiKitAdapter.AdaptShellChrome(chrome);
-    var avaloniaChrome = AvaloniaUiKitAdapter.AdaptShellChrome(chrome);
-
-    ExpectEqual("chummer-shell", blazorChrome.RootClass, "blazor shell root class");
-    ExpectContains(blazorChrome.Attributes["class"], "chummer-shell-focused", "blazor focused tone class");
-    ExpectContains(blazorChrome.Attributes["class"], "chummer-shell-compact", "blazor compact chrome class");
-
-    ExpectEqual("ShellRoot", avaloniaChrome.RootClass, "avalonia shell root class");
-    ExpectContains(avaloniaChrome.Attributes["classes"], "ShellFocused", "avalonia focus class");
-    ExpectContains(avaloniaChrome.Attributes["classes"], "ShellCompact", "avalonia compact class");
-}
-
-static void AdapterPayloadContainsAccessibilityAttributes()
-{
-    var state = new AccessibilityState("assertive", busy: true, disabled: false, label: "Loading panel");
-    var blazor = BlazorUiKitAdapter.AdaptAccessibilityState(state);
-    var avalonia = AvaloniaUiKitAdapter.AdaptAccessibilityState(state);
-
-    ExpectEqual("true", blazor.Attributes["aria-busy"], "blazor busy attribute");
-    ExpectEqual("assertive", blazor.Attributes["aria-live"], "blazor live attribute");
-    ExpectEqual("Loading panel", blazor.Attributes["aria-label"], "blazor label attribute");
-
-    ExpectEqual("true", avalonia.Attributes["is-busy"], "avalonia busy attribute");
-    ExpectEqual("assertive", avalonia.Attributes["live"], "avalonia live attribute");
-    ExpectEqual("Loading panel", avalonia.Attributes["label"], "avalonia label attribute");
-    ExpectEqual("status", avalonia.Attributes["role"], "avalonia state role");
-    ExpectEqual("status", blazor.Attributes["role"], "blazor state role");
-}
-
-static void AdapterPayloadContainsUiPrimitiveAttributes()
-{
+    var shell = new ShellChrome("Session", "Read only shell", ShellChromeTone.Warning, compact: true);
     var banner = new Banner("Read-only", "Data synced is paused.", BannerTone.Warning, pinned: true);
     var stale = new StaleStateBadge(StaleState.Failed, "Expired cache");
     var approval = new ApprovalChip(false, "Manager decision", "Alex");
     var offline = new OfflineBanner("Runtime Relay", isOffline: true);
-    var shell = new ShellChrome("Session", "Read only shell", ShellChromeTone.Warning, compact: true);
+    var accessibility = new AccessibilityState("assertive", busy: true, disabled: false, label: "Loading panel", describedBy: "panel-help");
+
+    ExpectPayload(
+        BlazorUiKitAdapter.AdaptShellChrome(shell),
+        "chummer-shell",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["role"] = "banner",
+            ["aria-label"] = "Session shell chrome",
+            ["data-title"] = "Session",
+            ["data-body"] = "Read only shell",
+            ["data-tone"] = "warning",
+            ["data-compact"] = "true",
+            ["class"] = "chummer-shell chummer-shell-warning chummer-shell-compact"
+        },
+        "blazor shell payload");
+    ExpectPayload(
+        AvaloniaUiKitAdapter.AdaptShellChrome(shell),
+        "ShellRoot",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["part"] = "shell",
+            ["classes"] = "ShellWarning ShellCompact",
+            ["title"] = "Session",
+            ["body"] = "Read only shell",
+            ["tone"] = "Warning",
+            ["compact"] = "true"
+        },
+        "avalonia shell payload");
 
     var blazorBanner = BlazorUiKitAdapter.AdaptBanner(banner);
     var avaloniaBanner = AvaloniaUiKitAdapter.AdaptBanner(banner);
-    var blazorBadge = BlazorUiKitAdapter.AdaptStaleStateBadge(stale);
-    var avaloniaBadge = AvaloniaUiKitAdapter.AdaptStaleStateBadge(stale);
-    var blazorChip = BlazorUiKitAdapter.AdaptApprovalChip(approval);
-    var avaloniaChip = AvaloniaUiKitAdapter.AdaptApprovalChip(approval);
-    var blazorOffline = BlazorUiKitAdapter.AdaptOfflineBanner(offline);
-    var avaloniaOffline = AvaloniaUiKitAdapter.AdaptOfflineBanner(offline);
-    var blazorChrome = BlazorUiKitAdapter.AdaptShellChrome(shell);
-    var avaloniaChrome = AvaloniaUiKitAdapter.AdaptShellChrome(shell);
+    ExpectPayload(
+        blazorBanner,
+        "chummer-banner chummer-banner-warning",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["role"] = "status",
+            ["data-tone"] = "warning",
+            ["data-title"] = "Read-only",
+            ["class"] = "chummer-banner chummer-banner-pinned",
+            ["data-body"] = "Data synced is paused.",
+            ["data-pinned"] = "true",
+            ["aria-label"] = "Read-only"
+        },
+        "blazor banner payload");
+    ExpectPayload(
+        avaloniaBanner,
+        "chummer-banner chummer-banner-warning",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["role"] = "status",
+            ["data-tone"] = "warning",
+            ["data-title"] = "Read-only",
+            ["part"] = "banner",
+            ["classes"] = "BannerWarning BannerPinned",
+            ["headline"] = "Read-only",
+            ["body"] = "Data synced is paused.",
+            ["tone"] = "Warning",
+            ["pinned"] = "true"
+        },
+        "avalonia banner payload");
 
-    ExpectEqual("warning", blazorBanner.Attributes["data-tone"], "blazor banner tone attribute");
-    ExpectEqual("true", blazorBanner.Attributes["data-pinned"], "blazor banner pinned attribute");
-    ExpectEqual("Data synced is paused.", blazorBanner.Attributes["data-body"], "blazor banner body attribute");
+    ExpectPayload(
+        BlazorUiKitAdapter.AdaptStaleStateBadge(stale),
+        "chummer-badge",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["role"] = "note",
+            ["data-state"] = "failed",
+            ["data-detail"] = "Expired cache",
+            ["class"] = "chummer-badge chummer-badge-failed",
+            ["aria-label"] = "Expired cache"
+        },
+        "blazor stale-state payload");
+    ExpectPayload(
+        AvaloniaUiKitAdapter.AdaptStaleStateBadge(stale),
+        "StaleBadge",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["part"] = "stale-badge",
+            ["classes"] = "StaleBadgeFailed",
+            ["state"] = "Failed",
+            ["state-detail"] = "Expired cache"
+        },
+        "avalonia stale-state payload");
 
-    ExpectEqual("Warning", avaloniaBanner.Attributes["tone"], "avalonia banner tone attribute");
-    ExpectEqual("true", avaloniaBanner.Attributes["pinned"], "avalonia banner pinned attribute");
-    ExpectEqual("Data synced is paused.", avaloniaBanner.Attributes["body"], "avalonia banner body attribute");
+    ExpectPayload(
+        BlazorUiKitAdapter.AdaptApprovalChip(approval),
+        "chummer-chip",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["role"] = "status",
+            ["data-approved"] = "false",
+            ["data-approver"] = "Alex",
+            ["class"] = "chummer-chip chummer-chip-pending",
+            ["aria-label"] = "Manager decision"
+        },
+        "blazor approval-chip payload");
+    ExpectPayload(
+        AvaloniaUiKitAdapter.AdaptApprovalChip(approval),
+        "ApprovalChip",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["part"] = "approval-chip",
+            ["classes"] = "ApprovalChipPending",
+            ["text"] = "Manager decision",
+            ["approved"] = "false",
+            ["label"] = "Manager decision",
+            ["approver"] = "Alex"
+        },
+        "avalonia approval-chip payload");
 
-    ExpectEqual("failed", blazorBadge.Attributes["data-state"], "blazor stale badge state attribute");
-    ExpectEqual("Expired cache", blazorBadge.Attributes["data-detail"], "blazor stale badge detail attribute");
-    ExpectEqual("Failed", avaloniaBadge.Attributes["state"], "avalonia stale badge state attribute");
+    ExpectPayload(
+        BlazorUiKitAdapter.AdaptOfflineBanner(offline),
+        "chummer-offline",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["role"] = "alert",
+            ["aria-live"] = "polite",
+            ["data-service"] = "Runtime Relay",
+            ["data-offline"] = "true",
+            ["class"] = "chummer-offline chummer-offline-on",
+            ["aria-label"] = "Runtime Relay is offline"
+        },
+        "blazor offline-banner payload");
+    ExpectPayload(
+        AvaloniaUiKitAdapter.AdaptOfflineBanner(offline),
+        "OfflineBanner",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["part"] = "offline-banner",
+            ["classes"] = "OfflineBannerOffline",
+            ["service"] = "Runtime Relay",
+            ["offline"] = "true"
+        },
+        "avalonia offline-banner payload");
 
-    ExpectEqual("false", blazorChip.Attributes["data-approved"], "blazor approval state attribute");
-    ExpectEqual("Alex", blazorChip.Attributes["data-approver"], "blazor approval approver attribute");
-    ExpectEqual("false", avaloniaChip.Attributes["approved"], "avalonia approval state attribute");
-    ExpectEqual("Manager decision", avaloniaChip.Attributes["label"], "avalonia approval label attribute");
-    ExpectEqual("Alex", avaloniaChip.Attributes["approver"], "avalonia approval approver attribute");
+    ExpectPayload(
+        BlazorUiKitAdapter.AdaptAccessibilityState(accessibility),
+        "chummer-accessibility",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["role"] = "status",
+            ["aria-busy"] = "true",
+            ["aria-disabled"] = "false",
+            ["aria-live"] = "assertive",
+            ["aria-label"] = "Loading panel",
+            ["aria-describedby"] = "panel-help"
+        },
+        "blazor accessibility payload");
+    ExpectPayload(
+        AvaloniaUiKitAdapter.AdaptAccessibilityState(accessibility),
+        "AccessibilityState",
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["part"] = "a11y",
+            ["role"] = "status",
+            ["is-busy"] = "true",
+            ["is-disabled"] = "false",
+            ["live"] = "assertive",
+            ["label"] = "Loading panel",
+            ["described-by"] = "panel-help"
+        },
+        "avalonia accessibility payload");
+}
 
-    ExpectEqual("Runtime Relay", blazorOffline.Attributes["data-service"], "blazor offline service attribute");
-    ExpectEqual("true", blazorOffline.Attributes["data-offline"], "blazor offline state attribute");
-    ExpectEqual("Runtime Relay", avaloniaOffline.Attributes["service"], "avalonia offline service attribute");
-    ExpectEqual("true", avaloniaOffline.Attributes["offline"], "avalonia offline state attribute");
+static void ExpectPayload(
+    UiAdapterPayload actualPayload,
+    string expectedRootClass,
+    IReadOnlyDictionary<string, string> expectedAttributes,
+    string scenario)
+{
+    ExpectEqual(expectedRootClass, actualPayload.RootClass, $"{scenario} root class");
+    ExpectEqualInt(expectedAttributes.Count, actualPayload.Attributes.Count, $"{scenario} attribute count");
 
-    ExpectEqual("warning", blazorChrome.Attributes["data-tone"], "blazor shell tone attribute");
-    ExpectEqual("true", blazorChrome.Attributes["data-compact"], "blazor shell compact attribute");
-    ExpectEqual("Session", avaloniaChrome.Attributes["title"], "avalonia shell title attribute");
-    ExpectEqual("true", avaloniaChrome.Attributes["compact"], "avalonia shell compact attribute");
+    foreach (var pair in expectedAttributes)
+    {
+        ExpectTrue(actualPayload.Attributes.ContainsKey(pair.Key), $"{scenario} contains attribute {pair.Key}");
+        ExpectEqual(pair.Value, actualPayload.Attributes[pair.Key], $"{scenario} attribute {pair.Key}");
+    }
 }
 
 static void ExpectEqual(string expected, string actual, string scenario)
 {
     if (!string.Equals(expected, actual, StringComparison.Ordinal))
+    {
+        throw new InvalidOperationException($"Expected {scenario} to be '{expected}' but was '{actual}'.");
+    }
+}
+
+static void ExpectEqualInt(int expected, int actual, string scenario)
+{
+    if (expected != actual)
     {
         throw new InvalidOperationException($"Expected {scenario} to be '{expected}' but was '{actual}'.");
     }

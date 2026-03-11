@@ -32,13 +32,14 @@ public sealed class PreviewGalleryManifest
             PreviewGalleryOwnership.CreateDefault(),
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
-            ["tokens"] = "Canonical token surface and raw values.",
-            ["themes"] = "Compiled theme output and CSS variable inspection.",
-            ["components"] = "Component gallery owned by the UI kit package.",
-            ["shell_chrome"] = "Shell chrome and state adapters for Blazor and Avalonia.",
-            ["banners"] = "Banner and stale-state badge primitives with adapter mappings.",
-            ["chips"] = "Approval chip and offline banner adapter payloads.",
-            ["accessibility"] = "Accessibility and state primitives for UI-kit adapters."
-        });
+                ["token_canon"] = "Canonical token surface and raw values.",
+                ["theme_compilation"] = "Compiled theme output and CSS variable inspection.",
+                ["shell_chrome"] = "Shell chrome primitive and adapter mappings.",
+                ["banner"] = "Banner primitive and adapter mappings.",
+                ["stale_state_badge"] = "Stale-state badge primitive and adapter mappings.",
+                ["approval_chip"] = "Approval chip primitive and adapter mappings.",
+                ["offline_banner"] = "Offline banner primitive and adapter mappings.",
+                ["accessibility_state"] = "Accessibility state primitive and adapter mappings."
+            });
     }
 }
